@@ -8,19 +8,8 @@ public class Word {
     @SerializedName("text_spa")
     public final String spanish;
 
-    private boolean wordAlreadyDisplayed;
-
     public Word(String english, String spanish) {
         this.english = english;
         this.spanish = spanish;
-        this.wordAlreadyDisplayed = false;
-    }
-
-    public boolean isWordAlreadyDisplayed() {
-        return wordAlreadyDisplayed;
-    }
-
-    public void setWordAlreadyDisplayed(boolean wordAlreadyDisplayed) {
-        this.wordAlreadyDisplayed = wordAlreadyDisplayed;
     }
 }

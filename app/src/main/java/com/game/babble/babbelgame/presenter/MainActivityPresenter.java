@@ -1,5 +1,7 @@
 package com.game.babble.babbelgame.presenter;
 
+import android.util.Log;
+
 import com.game.babble.babbelgame.model.Word;
 import com.game.babble.babbelgame.repository.MainActivityRepository;
 import com.game.babble.babbelgame.screen.MainActivityMvpView;
@@ -18,13 +20,16 @@ public class MainActivityPresenter {
     private MainActivityMvpView mvpView;
     private List<Word> wordsToPlay;
     private List<Word> words;
-    private int currIndex;
+    private int currDisplayedTranslationIndex;
+    private int currDisplayedWordIndex;
     private int currScore;
+    private Random random;
 
     public MainActivityPresenter(MainActivityRepository repository, MainActivityMvpView mvpView) {
         this.repository = repository;
         this.mvpView = mvpView;
         this.currScore = 0;
+        this.random = new Random();
     }
 
     public void fetchWords(InputStream inputStream) {
@@ -44,18 +49,20 @@ public class MainActivityPresenter {
 
     public void fetchNewWord() {
         if (wordsToPlay.size() > 0) {
-            currIndex = generateNextWord(wordsToPlay);
-            mvpView.showWord(wordsToPlay.get(0).english, wordsToPlay.get(currIndex).spanish);
+            currDisplayedTranslationIndex = generateNextInt();
+            currDisplayedWordIndex = generateNextInt();
+            mvpView.showWord(wordsToPlay.get(currDisplayedWordIndex).english, wordsToPlay.get
+                    (currDisplayedTranslationIndex).spanish);
         } else {
             mvpView.showScore(currScore);
-            //restart game
         }
     }
 
     public void checkIfCorrectAnswer(boolean correctChosen) {
-        Word currWord = wordsToPlay.get(0);
-        Word wordShownToUser = wordsToPlay.get(currIndex);
-        wordsToPlay.remove(0);
+        Word currWord = wordsToPlay.get(currDisplayedWordIndex);
+        Word wordShownToUser = wordsToPlay.get(currDisplayedTranslationIndex);
+        wordsToPlay.remove(currDisplayedWordIndex);
+
         if (currWord.spanish.equals(wordShownToUser.spanish) &&
                 correctChosen || !currWord.spanish.equals(wordShownToUser.spanish) &&
                 !correctChosen) {
@@ -66,7 +73,7 @@ public class MainActivityPresenter {
     }
 
     public void noAnswerChosen() {
-        wordsToPlay.remove(0);
+        wordsToPlay.remove(currDisplayedWordIndex);
         mvpView.showWrongFeedback();
     }
 
@@ -85,9 +92,8 @@ public class MainActivityPresenter {
         return DELAY;
     }
 
-    private int generateNextWord(List<Word> words) {
-
-        return (int) (new Random().nextFloat() * (words.size() - 1));
+    private int generateNextInt() {
+        return  random.nextInt(wordsToPlay.size());
     }
 
 }
