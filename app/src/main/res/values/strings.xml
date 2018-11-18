@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BabbelGame</string>
+    <string name="correct">CORRECT</string>
+    <string name="wrong">WRONG</string>
+    <string name="score">Score: %d</string>
+    <string name="final_score">Your final score is: %d</string>
+    <string name="play_again">PLAY AGAIN</string>
 </resources>

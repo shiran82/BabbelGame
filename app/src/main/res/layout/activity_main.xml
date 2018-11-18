@@ -9,23 +9,33 @@
         android:background="@color/colorWhite"
         tools:context=".screen.MainActivity">
 
+        <TextView
+            android:id="@+id/text_view_word_translation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="64dp"
+            tools:text="word" />
 
         <TextView
             android:id="@+id/text_view_word"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="word" />
+            tools:text="word" />
 
-        <TextView
-            android:id="@+id/text_view_word_translation"
+        <Button
+            android:id="@+id/button_replay"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="64dp"
-            android:text="word" />
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view_word"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/play_again"
+            android:visibility="gone" />
 
         <LinearLayout
+            android:id="@+id/linear_layout"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_alignParentBottom="true">
@@ -36,7 +46,7 @@
                 android:layout_height="70dp"
                 android:layout_weight="1"
                 android:background="@color/colorYellow"
-                android:text="CORRECT" />
+                android:text="@string/correct" />
 
             <Button
                 android:id="@+id/button_wrong"
@@ -44,7 +54,7 @@
                 android:layout_height="70dp"
                 android:layout_weight="1"
                 android:background="@color/colorYellow"
-                android:text="WRONG" />
+                android:text="@string/wrong" />
 
         </LinearLayout>
 
