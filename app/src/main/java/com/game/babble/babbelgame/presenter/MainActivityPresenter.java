@@ -18,8 +18,10 @@ public class MainActivityPresenter {
 
     private MainActivityRepository repository;
     private MainActivityMvpView mvpView;
+
     private List<Word> wordsToPlay;
     private List<Word> words;
+
     private int currDisplayedTranslationIndex;
     private int currDisplayedWordIndex;
     private int currScore;
@@ -48,7 +50,7 @@ public class MainActivityPresenter {
     }
 
     public void fetchNewWord() {
-        if (wordsToPlay.size() > 0) {
+        if (!wordsToPlay.isEmpty()) {
             currDisplayedTranslationIndex = generateNextInt();
             currDisplayedWordIndex = generateNextInt();
             mvpView.showWord(wordsToPlay.get(currDisplayedWordIndex).english, wordsToPlay.get
