@@ -1,7 +1,5 @@
 package com.game.babble.babbelgame.presenter;
 
-import android.util.Log;
-
 import com.game.babble.babbelgame.model.Word;
 import com.game.babble.babbelgame.repository.MainActivityRepository;
 import com.game.babble.babbelgame.screen.MainActivityMvpView;
@@ -42,19 +40,18 @@ public class MainActivityPresenter {
         fetchNewWord();
 
         try {
-            inputStream.close();
+            mvpView.closeStream(inputStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            //TODO decide on error message or action
         }
-
     }
 
     public void fetchNewWord() {
         if (!wordsToPlay.isEmpty()) {
             currDisplayedTranslationIndex = generateNextInt();
             currDisplayedWordIndex = generateNextInt();
-            mvpView.showWord(wordsToPlay.get(currDisplayedWordIndex).english, wordsToPlay.get
-                    (currDisplayedTranslationIndex).spanish);
+            mvpView.showWord(wordsToPlay.get(currDisplayedWordIndex).english,
+                    wordsToPlay.get(currDisplayedTranslationIndex).spanish);
         } else {
             mvpView.showScore(currScore);
         }
@@ -95,7 +92,7 @@ public class MainActivityPresenter {
     }
 
     private int generateNextInt() {
-        return  random.nextInt(wordsToPlay.size());
+        return random.nextInt(wordsToPlay.size());
     }
 
 }

@@ -20,6 +20,7 @@ import com.game.babble.babbelgame.presenter.MainActivityPresenter;
 import com.game.babble.babbelgame.repository.MainActivityDataRepository;
 import com.game.babble.babbelgame.databinding.ActivityMainBinding;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 public class MainActivity extends Activity implements MainActivityMvpView {
@@ -33,32 +34,7 @@ public class MainActivity extends Activity implements MainActivityMvpView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
-        presenter = new MainActivityPresenter(new
-                MainActivityDataRepository(), this);
-
-        inputStream = getResources().openRawResource(R.raw.words);
-
-        binding.buttonCorrect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setOnAnswerButtonClicked(true);
-            }
-        });
-
-        binding.buttonWrong.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setOnAnswerButtonClicked(false);
-
-            }
-        });
-
-        binding.toolbar.setTitle(getString(R.string.score, 0));
-
-        presenter.fetchWords(inputStream);
-
+        init();
     }
 
     @Override
@@ -91,7 +67,6 @@ public class MainActivity extends Activity implements MainActivityMvpView {
         showFeedback(R.color.colorRed);
 
         fetchNextWord();
-
     }
 
     @Override
@@ -109,6 +84,11 @@ public class MainActivity extends Activity implements MainActivityMvpView {
                 presenter.replayGame();
             }
         });
+    }
+
+    @Override
+    public void closeStream(InputStream inputStream) throws IOException {
+        inputStream.close();
     }
 
     public void setAnimation() {
@@ -151,6 +131,33 @@ public class MainActivity extends Activity implements MainActivityMvpView {
             public void onAnimationRepeat(Animation animation) {
             }
         });
+    }
+
+    private void init() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        binding.buttonCorrect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setOnAnswerButtonClicked(true);
+            }
+        });
+
+        binding.buttonWrong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setOnAnswerButtonClicked(false);
+
+            }
+        });
+
+        binding.toolbar.setTitle(getString(R.string.score, 0));
+
+        inputStream = getResources().openRawResource(R.raw.words);
+
+        presenter = new MainActivityPresenter(new MainActivityDataRepository(), this);
+
+        presenter.fetchWords(inputStream);
     }
 
     private void setAnswerButtonClickable(boolean clickable) {

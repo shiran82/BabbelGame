@@ -33,6 +33,8 @@ public class MainActivityPresenterTest {
 
     @Spy
     private List<Word> wordsToPlay;
+    private Word wordShownToUser;
+    private Word currWord;
 
     @Before
     public void setUp() {
@@ -81,7 +83,7 @@ public class MainActivityPresenterTest {
     }
 
     @Test
-    public void testCheckIfCorrectAnswerCorrectFeedbac() {
+    public void testCheckIfCorrectAnswerCorrectFeedback() {
         Word word = new Word("", "");
 
         when(wordsToPlay.get(anyInt())).thenReturn(word);
